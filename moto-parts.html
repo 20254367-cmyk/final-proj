@@ -2,152 +2,753 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Moto Parts - Karl Garage</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moto Parts - Karl Garage | Premium Motorcycle Parts</title>
+<style>
+  /* ===== RESET & BASE - Light Red, Black, White Theme ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  }
 
+  body {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER & CENTERED NAVIGATION ===== */
+  header {
+    background: #000000;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .logo {
+    height: 52px;
+    width: auto;
+    background: #ff4444;
+    border-radius: 40px;
+    padding: 5px 12px;
+    object-fit: contain;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #1a1a1a;
+    padding: 0.5rem 1.8rem;
+    border-radius: 60px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    padding: 0.3rem 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: #ff6666;
+    border-bottom-color: #ff4444;
+    transform: translateY(-1px);
+  }
+
+  nav a.active {
+    color: #ff4444;
+    border-bottom-color: #ff4444;
+    font-weight: 700;
+  }
+
+  .cart {
+    background: #1a1a1a;
+    padding: 0.4rem 1rem;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .cart span {
+    background: #ff4444;
+    color: #ffffff;
+    padding: 0 6px;
+    border-radius: 30px;
+    font-weight: 800;
+  }
+
+  .nav-balance {
+    width: 120px;
+    visibility: hidden;
+  }
+
+  @media (max-width: 850px) {
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .nav-balance {
+      display: none;
+    }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    flex: 1;
+  }
+
+  .card {
+    max-width: 1400px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 2rem;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .card h2 {
+    font-size: 1.8rem;
+    border-left: 6px solid #ff4444;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  /* parts grid - 20 parts layout */
+  .parts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .part {
+    background: #ffffff;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+    text-align: center;
+    padding-bottom: 1rem;
+    border: 1px solid #e4e9f0;
+  }
+
+  .part:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 28px rgba(0,0,0,0.12);
+    border-color: #ff4444;
+  }
+
+  .part img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background: #eef2f5;
+    transition: transform 0.2s;
+  }
+
+  .part:hover img {
+    transform: scale(1.02);
+  }
+
+  .part h3 {
+    margin: 0.6rem 0 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ff4444;
+    margin: 0.3rem 0;
+  }
+
+  .buy {
+    background: #1a1a1a;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 0.3rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .buy:hover {
+    background: #ff4444;
+    color: #ffffff;
+    transform: scale(0.96);
+  }
+
+  /* Cart box style */
+  .cart-box {
+    background: #faf9f5;
+    border-radius: 1.2rem;
+    padding: 0.5rem 0;
+    min-height: 100px;
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    margin: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 60px;
+    border-left: 4px solid #ff4444;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    font-weight: 500;
+  }
+
+  .cart-item button {
+    background: #e23b3b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.15s;
+    font-size: 1rem;
+  }
+
+  .cart-item button:hover {
+    background: #ac2c2c;
+    transform: scale(0.94);
+  }
+
+  .checkout-btn {
+    background: #ff4444;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+    color: #ffffff;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .checkout-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+  }
+
+  /* MODAL for receipt */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-content {
+    background: white;
+    max-width: 450px;
+    width: 85%;
+    padding: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    box-shadow: 0 25px 35px rgba(0,0,0,0.3);
+    animation: fadeSlide 0.25s ease;
+  }
+
+  .modal-content h2 {
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+  }
+
+  .modal-content p {
+    background: #f0f3f8;
+    padding: 1rem;
+    border-radius: 1.2rem;
+    white-space: pre-line;
+    font-family: monospace;
+    font-size: 1rem;
+    text-align: left;
+    margin: 1rem 0;
+    max-height: 280px;
+    overflow: auto;
+  }
+
+  .modal-content button {
+    background: #ff4444;
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 60px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+
+  .modal-content button:hover {
+    background: #cc0000;
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* TOAST MESSAGES */
+  .toast-msg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: #ff4444;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 1100;
+    animation: fadeOut 2.5s forwards;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  @keyframes fadeOut {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    70% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; }
+  }
+
+  /* ===== FOOTER - FULLY FUNCTIONAL ===== */
+  .modern-footer {
+    background: #000000;
+    color: #e2e8f0;
+    margin-top: 2rem;
+    padding: 2.5rem 2rem 1.5rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  .footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.6rem;
+    color: #ff4444;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-brand p {
+    line-height: 1.5;
+    opacity: 0.85;
+    margin-bottom: 1rem;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .social-icons a {
+    background: #1a1a1a;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ff4444;
+    font-weight: bold;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .social-icons a:hover {
+    background: #ff4444;
+    color: #000000;
+    transform: translateY(-3px);
+  }
+
+  .footer-links h4, .footer-contact h4, .footer-newsletter h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ff6666;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-links a:hover {
+    color: #ff4444;
+    padding-left: 5px;
+  }
+
+  .footer-contact p {
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .footer-contact p:hover {
+    color: #ff4444;
+    transform: translateX(3px);
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .newsletter-form input {
+    padding: 0.8rem 1rem;
+    border-radius: 60px;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder {
+    color: #888888;
+  }
+
+  .newsletter-form button {
+    background: #ff4444;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .newsletter-form button:hover {
+    background: #cc0000;
+    transform: scale(0.98);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1a1a1a;
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom a {
+    color: #ff4444;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .footer-bottom a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
 <body>
 
 <header>
 <div class="header-container">
-    <img src="logo.webp" class="logo">
-
+    <img src="logo.webp" class="logo" alt="Karl Garage Logo">
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="moto-parts.html">Moto Parts</a>
+        <a href="moto-parts.html" class="active">Moto Parts</a>
         <a href="services.html">Services</a>
         <a href="contact.html">Contact</a>
-
-        <div class="cart">
-            🛒 <span id="count">0</span> items | ₱<span id="total">0</span>
-        </div>
     </nav>
+    <div class="cart">
+        🛒 <span id="count">0</span> items | ₱<span id="total">0</span>
+    </div>
+    <div class="nav-balance"></div>
 </div>
 </header>
 
+<main>
 <section class="card">
-<h2>Moto Parts Shop</h2>
-
+<h2>🏍️ Moto Parts Shop - 20+ Premium Parts</h2>
 <div class="parts-grid">
-
-    <div class="part">
-        <img src="engine.webp">
-        <h3>Engine</h3>
-        <p class="price">₱5000</p>
-        <button class="buy" onclick="add('Engine',5000)">Add</button>
-    </div>
-
-    <div class="part">
-        <img src="piston.jpg">
-        <h3>Piston</h3>
-        <p class="price">₱800</p>
-        <button class="buy" onclick="add('Piston',800)">Add</button>
-    </div>
-
-    <div class="part">
-        <img src="spark plug.jfif">
-        <h3>Spark Plug</h3>
-        <p class="price">₱150</p>
-        <button class="buy" onclick="add('Spark Plug',150)">Add</button>
-    </div>
-
-    <div class="part">
-        <img src="carburetors.jfif">
-        <h3>Carburetor</h3>
-        <p class="price">₱1200</p>
-        <button class="buy" onclick="add('Carburetor',1200)">Add</button>
-    </div>
-
+    <div class="part"><img src="engine.webp" alt="Engine"><h3>Engine Assembly</h3><p class="price">₱5000</p><button class="buy" onclick="add('Engine Assembly',5000)">Add to Cart</button></div>
+    <div class="part"><img src="piston.jpg" alt="Piston"><h3>Piston Kit</h3><p class="price">₱800</p><button class="buy" onclick="add('Piston Kit',800)">Add to Cart</button></div>
+    <div class="part"><img src="spark plug.jfif" alt="Spark Plug"><h3>Iridium Spark Plug</h3><p class="price">₱150</p><button class="buy" onclick="add('Iridium Spark Plug',150)">Add to Cart</button></div>
+    <div class="part"><img src="carburetors.jfif" alt="Carburetor"><h3>Carburetor</h3><p class="price">₱1200</p><button class="buy" onclick="add('Carburetor',1200)">Add to Cart</button></div>
+    <div class="part"><img src="brake-pads.jpg" alt="Brake Pads"><h3>Brake Pads Set</h3><p class="price">₱350</p><button class="buy" onclick="add('Brake Pads Set',350)">Add to Cart</button></div>
+    <div class="part"><img src="air-filter.jpg" alt="Air Filter"><h3>Air Filter</h3><p class="price">₱250</p><button class="buy" onclick="add('Air Filter',250)">Add to Cart</button></div>
+    <div class="part"><img src="oil-filter.jpg" alt="Oil Filter"><h3>Oil Filter</h3><p class="price">₱180</p><button class="buy" onclick="add('Oil Filter',180)">Add to Cart</button></div>
+    <div class="part"><img src="chain-sprocket.jpg" alt="Chain & Sprocket"><h3>Chain & Sprocket Kit</h3><p class="price">₱950</p><button class="buy" onclick="add('Chain & Sprocket Kit',950)">Add to Cart</button></div>
+    <div class="part"><img src="battery.jpg" alt="Battery"><h3>Maintenance-Free Battery</h3><p class="price">₱1800</p><button class="buy" onclick="add('Maintenance-Free Battery',1800)">Add to Cart</button></div>
+    <div class="part"><img src="headlight.jpg" alt="Headlight"><h3>LED Headlight</h3><p class="price">₱650</p><button class="buy" onclick="add('LED Headlight',650)">Add to Cart</button></div>
+    <div class="part"><img src="taillight.jpg" alt="Taillight"><h3>LED Taillight</h3><p class="price">₱400</p><button class="buy" onclick="add('LED Taillight',400)">Add to Cart</button></div>
+    <div class="part"><img src="clutch-cable.jpg" alt="Clutch Cable"><h3>Clutch Cable</h3><p class="price">₱200</p><button class="buy" onclick="add('Clutch Cable',200)">Add to Cart</button></div>
+    <div class="part"><img src="throttle-cable.jpg" alt="Throttle Cable"><h3>Throttle Cable</h3><p class="price">₱220</p><button class="buy" onclick="add('Throttle Cable',220)">Add to Cart</button></div>
+    <div class="part"><img src="brake-lever.jpg" alt="Brake Lever"><h3>Brake Lever</h3><p class="price">₱280</p><button class="buy" onclick="add('Brake Lever',280)">Add to Cart</button></div>
+    <div class="part"><img src="clutch-lever.jpg" alt="Clutch Lever"><h3>Clutch Lever</h3><p class="price">₱280</p><button class="buy" onclick="add('Clutch Lever',280)">Add to Cart</button></div>
+    <div class="part"><img src="mirror.jpg" alt="Side Mirror"><h3>Side Mirror</h3><p class="price">₱300</p><button class="buy" onclick="add('Side Mirror',300)">Add to Cart</button></div>
+    <div class="part"><img src="handle-grip.jpg" alt="Handle Grip"><h3>Handle Grip</h3><p class="price">₱150</p><button class="buy" onclick="add('Handle Grip',150)">Add to Cart</button></div>
+    <div class="part"><img src="footrest.jpg" alt="Footrest"><h3>Footrest Pegs</h3><p class="price">₱320</p><button class="buy" onclick="add('Footrest Pegs',320)">Add to Cart</button></div>
+    <div class="part"><img src="tire-tube.jpg" alt="Tire Tube"><h3>Inner Tire Tube</h3><p class="price">₱280</p><button class="buy" onclick="add('Inner Tire Tube',280)">Add to Cart</button></div>
+    <div class="part"><img src="fuse-box.jpg" alt="Fuse Box"><h3>Fuse Box Kit</h3><p class="price">₱180</p><button class="buy" onclick="add('Fuse Box Kit',180)">Add to Cart</button></div>
 </div>
 </section>
 
-<!-- 👇 LIVE CART DISPLAY -->
 <section class="card">
-<h2>Your Cart</h2>
-
+<h2>🛵 Your Cart</h2>
 <div id="cartBox" class="cart-box"></div>
-
 <button class="checkout-btn" onclick="checkout()">🛒 CHECKOUT NOW</button>
 </section>
+</main>
 
-<!-- RECEIPT -->
+<!-- FULLY FUNCTIONAL FOOTER -->
+<footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h3>🏍️ Karl Garage</h3>
+      <p>Premium motorcycle parts, expert repair, and genuine care for every rider.</p>
+      <div class="social-icons">
+        <a onclick="socialClick('Facebook')">📘</a>
+        <a onclick="socialClick('Instagram')">📷</a>
+        <a onclick="socialClick('Twitter')">🐦</a>
+        <a onclick="socialClick('YouTube')">▶️</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a onclick="navLink('Home')">Home</a></li>
+        <li><a onclick="navLink('About')">About Us</a></li>
+        <li><a onclick="navLink('Moto Parts')">Moto Parts</a></li>
+        <li><a onclick="navLink('Services')">Services</a></li>
+        <li><a onclick="navLink('Contact')">Contact</a></li>
+        <li><a onclick="navLink('Privacy')">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact Info</h4>
+      <p onclick="copyText('+63 912 345 6789', 'Phone')">📞 +63 912 345 6789</p>
+      <p onclick="copyText('hello@karlgarage.com', 'Email')">✉️ hello@karlgarage.com</p>
+      <p onclick="showHoursDetail()">🕒 Mon - Sat: 9AM - 7PM</p>
+      <p>📍 123 Moto Avenue, Irisan, Baguio City</p>
+    </div>
+    <div class="footer-newsletter">
+      <h4>Gear Up 🛵</h4>
+      <p>Get exclusive offers & moto tips.</p>
+      <div class="newsletter-form">
+        <input type="email" id="newsEmail" placeholder="Your email address">
+        <button onclick="subscribeNews()">Subscribe →</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Karl Garage – Premium Moto Parts & Service | Built for riders. <a onclick="navLink('Privacy')">Privacy</a> | <a onclick="navLink('Terms')">Terms</a></p>
+  </div>
+</footer>
+
+<!-- Receipt Modal -->
 <div id="popup" class="modal">
     <div class="modal-content">
-        <h2>🧾 Receipt</h2>
+        <h2>🧾 Official Receipt</h2>
         <p id="receipt"></p>
-        <button onclick="closePopup()">OK</button>
+        <button onclick="closePopup()">✔️ CLOSE</button>
     </div>
 </div>
 
 <script>
-
+// ==================== CART LOGIC ====================
 let cart = [];
 
-/* ADD ITEM */
-function add(name, price){
-    cart.push({name, price});
-    update();
+function add(name, price) {
+    cart.push({ name, price });
+    updateCartUI();
+    showToast(`✓ ${name} added to cart!`);
 }
 
-/* REMOVE ITEM */
-function remove(index){
-    cart.splice(index,1);
-    update();
+function remove(index) {
+    let removed = cart[index];
+    cart.splice(index, 1);
+    updateCartUI();
+    showToast(`✗ ${removed.name} removed`);
 }
 
-/* UPDATE CART UI */
-function update(){
-
-    let box = document.getElementById("cartBox");
+function updateCartUI() {
+    const box = document.getElementById("cartBox");
+    if (!box) return;
+    
     box.innerHTML = "";
+    let totalAmount = 0;
 
-    let total = 0;
-
-    cart.forEach((item, i)=>{
-        total += item.price;
-
-        box.innerHTML += `
-        <div class="cart-item">
-            <span>${item.name} - ₱${item.price}</span>
-            <button onclick="remove(${i})">X</button>
-        </div>`;
+    cart.forEach((item, idx) => {
+        totalAmount += item.price;
+        const cartItemDiv = document.createElement("div");
+        cartItemDiv.className = "cart-item";
+        cartItemDiv.innerHTML = `
+            <span>${escapeHtml(item.name)} - ₱${item.price.toLocaleString()}</span>
+            <button onclick="remove(${idx})" aria-label="Remove item">✖</button>
+        `;
+        box.appendChild(cartItemDiv);
     });
 
+    if (cart.length === 0) {
+        const emptyMsg = document.createElement("div");
+        emptyMsg.style.textAlign = "center";
+        emptyMsg.style.padding = "2rem";
+        emptyMsg.style.color = "#6c7a75";
+        emptyMsg.style.fontStyle = "italic";
+        emptyMsg.innerText = "🛍️ No items yet. Add some moto parts!";
+        box.appendChild(emptyMsg);
+    }
+
     document.getElementById("count").innerText = cart.length;
-    document.getElementById("total").innerText = total;
+    document.getElementById("total").innerText = totalAmount.toLocaleString();
 }
 
-/* CHECKOUT */
-function checkout(){
+function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
 
-    if(cart.length === 0){
-        alert("Cart is empty!");
+function checkout() {
+    if (cart.length === 0) {
+        alert("🛑 Your cart is empty! Add some parts before checkout.");
         return;
     }
 
-    let text = "";
-    let total = 0;
+    let receiptText = "";
+    let totalSum = 0;
+    const itemLines = [];
 
-    cart.forEach(item=>{
-        text += item.name + " - ₱" + item.price + "\n";
-        total += item.price;
+    cart.forEach(item => {
+        totalSum += item.price;
+        itemLines.push(`${item.name} ................ ₱${item.price.toLocaleString()}`);
     });
 
-    text += "\nTOTAL: ₱" + total;
+    receiptText = itemLines.join("\n");
+    receiptText += `\n───────────────────\n💰 TOTAL AMOUNT: ₱${totalSum.toLocaleString()}\n📅 ${new Date().toLocaleString()}\n🏍️ Karl Garage thanks you!`;
 
-    document.getElementById("receipt").innerText = text;
+    document.getElementById("receipt").innerText = receiptText;
     document.getElementById("popup").style.display = "flex";
 
     cart = [];
-    update();
+    updateCartUI();
+    showToast("✅ Checkout complete! Thank you.");
 }
 
-/* CLOSE POPUP */
-function closePopup(){
+function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 
+// ==================== FOOTER UTILITIES ====================
+function showToast(msg) {
+    let toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => { if(toast.parentNode) toast.remove(); }, 2600);
+}
+
+function socialClick(platform) { showToast(`📱 Follow us on ${platform} for moto updates!`); }
+function navLink(page) { showToast(`🔍 Navigating to ${page} page (demo)`); }
+function copyText(text, label) { 
+    navigator.clipboard.writeText(text); 
+    showToast(`📋 ${label} copied: ${text}`);
+}
+function showHoursDetail() { showToast("🕒 Operating Hours: Monday to Saturday, 9AM – 7PM. Closed Sunday."); }
+function subscribeNews() {
+    let email = document.getElementById("newsEmail").value.trim();
+    if (!email || !email.includes('@')) { alert("Please enter a valid email address."); return; }
+    showToast(`📧 Subscribed! ${email} will receive exclusive offers.`);
+    document.getElementById("newsEmail").value = "";
+    localStorage.setItem('kg_newsletter', email);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartUI();
+});
 </script>
 
 </body>

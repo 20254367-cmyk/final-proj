@@ -2,138 +2,793 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Services - Karl Garage</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services - Karl Garage | Premium Moto Service</title>
+<style>
+  /* ===== RESET & BASE - Light Red, Black, White Theme ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  }
 
+  body {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER & CENTERED NAVIGATION ===== */
+  header {
+    background: #000000;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .logo {
+    height: 52px;
+    width: auto;
+    background: #ff4444;
+    border-radius: 40px;
+    padding: 5px 12px;
+    object-fit: contain;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #1a1a1a;
+    padding: 0.5rem 1.8rem;
+    border-radius: 60px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    padding: 0.3rem 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: #ff6666;
+    border-bottom-color: #ff4444;
+    transform: translateY(-1px);
+  }
+
+  nav a.active {
+    color: #ff4444;
+    border-bottom-color: #ff4444;
+    font-weight: 700;
+  }
+
+  .cart {
+    background: #1a1a1a;
+    padding: 0.4rem 1rem;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-left: 0.5rem;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .cart span {
+    background: #ff4444;
+    color: #ffffff;
+    padding: 0 6px;
+    border-radius: 30px;
+    font-weight: 800;
+  }
+
+  .nav-balance {
+    width: 120px;
+    visibility: hidden;
+  }
+
+  @media (max-width: 850px) {
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .cart {
+      margin-left: 0;
+    }
+    .nav-balance {
+      display: none;
+    }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    flex: 1;
+  }
+
+  .card {
+    max-width: 1300px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 2rem;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .card h2 {
+    font-size: 1.8rem;
+    border-left: 6px solid #ff4444;
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    font-weight: 700;
+  }
+
+  .card > p {
+    color: #666666;
+    margin-bottom: 1.8rem;
+    padding-left: 1rem;
+    font-weight: 500;
+  }
+
+  /* Services Grid */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .service {
+    background: #fefcf7;
+    padding: 1.2rem 0.8rem;
+    border-radius: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+  }
+
+  .service:hover {
+    transform: translateY(-5px);
+    border-color: #ff4444;
+    background: white;
+    box-shadow: 0 12px 22px rgba(0,0,0,0.1);
+  }
+
+  .service h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  /* Cart display */
+  .cart-box {
+    background: #faf9f5;
+    border-radius: 1.2rem;
+    padding: 0.5rem 0;
+    min-height: 90px;
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    margin: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 60px;
+    border-left: 4px solid #ff4444;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    font-weight: 500;
+  }
+
+  .cart-item button {
+    background: #e23b3b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .cart-item button:hover {
+    background: #ac2c2c;
+  }
+
+  .checkout-btn {
+    background: #ff4444;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .checkout-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+  }
+
+  /* MODAL STYLES (booking) */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-content {
+    background: white;
+    max-width: 480px;
+    width: 90%;
+    padding: 2rem;
+    border-radius: 2rem;
+    animation: fadeSlide 0.25s ease;
+    box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+  }
+
+  .modal-content h2 {
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+  }
+
+  .booking-sub {
+    color: #666666;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .modal-content label {
+    font-weight: 600;
+    color: #1a1a1a;
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-content input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 60px;
+    border: 1px solid #cbd5e1;
+    background: #fefcf7;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  .modal-content input:focus {
+    border-color: #ff4444;
+    box-shadow: 0 0 0 2px rgba(255,68,68,0.2);
+  }
+
+  .modal-content button {
+    background: #1a1a1a;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.8rem;
+    border-radius: 60px;
+    width: 100%;
+    margin-top: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1rem;
+  }
+
+  .modal-content button:hover {
+    background: #ff4444;
+    color: #ffffff;
+  }
+
+  .close-btn {
+    background: #4a4a4a !important;
+    margin-top: 0.6rem !important;
+  }
+
+  .close-btn:hover {
+    background: #666666 !important;
+    color: white !important;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-30px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  /* Receipt popup */
+  #receipt {
+    background: #f0f3f8;
+    padding: 1rem;
+    border-radius: 1rem;
+    white-space: pre-line;
+    font-family: monospace;
+    text-align: left;
+    margin: 1rem 0;
+  }
+
+  /* TOAST */
+  .toast-msg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: #ff4444;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 1100;
+    animation: fadeOut 2.5s forwards;
+    pointer-events: none;
+  }
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* Footer (fully functional) */
+  .modern-footer {
+    background: #000000;
+    color: #e2e8f0;
+    margin-top: 2rem;
+    padding: 2.5rem 2rem 1.5rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  .footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.6rem;
+    color: #ff4444;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-brand p {
+    line-height: 1.5;
+    opacity: 0.85;
+    margin-bottom: 1rem;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .social-icons a {
+    background: #1a1a1a;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ff4444;
+    font-size: 1.2rem;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .social-icons a:hover {
+    background: #ff4444;
+    color: #000000;
+    transform: translateY(-3px);
+  }
+
+  .footer-links h4, .footer-contact h4, .footer-newsletter h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ff6666;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-links a:hover {
+    color: #ff4444;
+    padding-left: 5px;
+  }
+
+  .footer-contact p {
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .footer-contact p:hover {
+    color: #ff4444;
+    transform: translateX(3px);
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .newsletter-form input {
+    padding: 0.8rem 1rem;
+    border-radius: 60px;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder {
+    color: #888888;
+  }
+
+  .newsletter-form button {
+    background: #ff4444;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .newsletter-form button:hover {
+    background: #cc0000;
+    transform: scale(0.98);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1a1a1a;
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom a {
+    color: #ff4444;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .footer-bottom a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .services {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    .card {
+      padding: 1.2rem;
+    }
+  }
+</style>
+</head>
 <body>
 
 <header>
-<div class="header-container">
-    <img src="logo.webp" class="logo">
-
+  <div class="header-container">
+    <img src="logo.webp" class="logo" alt="Karl Garage Logo">
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="moto-parts.html">Moto Parts</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="moto-parts.html">Moto Parts</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="contact.html">Contact</a>
     </nav>
-</div>
+    <div class="cart">
+      🛒 <span id="count">0</span> items | ₱<span id="total">0</span>
+    </div>
+    <div class="nav-balance"></div>
+  </div>
 </header>
 
-<section class="card">
-<h2>Our Services</h2>
-<p>Click any service to book an appointment</p>
+<main>
+  <section class="card">
+    <h2>🛠 Our Premium Services</h2>
+    <p>Click any service to book an appointment — expert mechanics, fast turnaround.</p>
 
-<div class="services">
+    <div class="services">
+      <div class="service" onclick="book('Oil Change')"><h3>⚡ Oil Change</h3></div>
+      <div class="service" onclick="book('Engine Repair')"><h3>🔧 Engine Repair</h3></div>
+      <div class="service" onclick="book('Brake Service')"><h3>🛑 Brake Service</h3></div>
+      <div class="service" onclick="book('Tire Replacement')"><h3>🛞 Tire Replacement</h3></div>
+      <div class="service" onclick="book('Battery Check')"><h3>🔋 Battery Check</h3></div>
+      <div class="service" onclick="book('Full Maintenance')"><h3>🏍️ Full Maintenance</h3></div>
+      <div class="service" onclick="book('Chain Adjustment')"><h3>⛓️ Chain Adjustment</h3></div>
+      <div class="service" onclick="book('Carburetor Cleaning')"><h3>💨 Carburetor Cleaning</h3></div>
+      <div class="service" onclick="book('Spark Plug Replace')"><h3>⚙️ Spark Plug Replace</h3></div>
+      <div class="service" onclick="book('Air Filter Service')"><h3>🌀 Air Filter Service</h3></div>
+      <div class="service" onclick="book('Radiator Flush')"><h3>🌡️ Radiator Flush</h3></div>
+      <div class="service" onclick="book('Electrical Check')"><h3>⚡ Electrical Check</h3></div>
+      <div class="service" onclick="book('Clutch Repair')"><h3>🔄 Clutch Repair</h3></div>
+      <div class="service" onclick="book('Gear Adjustment')"><h3>⚙️ Gear Adjustment</h3></div>
+      <div class="service" onclick="book('Wheel Alignment')"><h3>📐 Wheel Alignment</h3></div>
+      <div class="service" onclick="book('Headlight Repair')"><h3>💡 Headlight Repair</h3></div>
+      <div class="service" onclick="book('Exhaust Repair')"><h3>💨 Exhaust Repair</h3></div>
+      <div class="service" onclick="book('Suspension Fix')"><h3>🏍️ Suspension Fix</h3></div>
+      <div class="service" onclick="book('Tune Up')"><h3>🎯 Tune Up</h3></div>
+      <div class="service" onclick="book('Diagnostic Scan')"><h3>📟 Diagnostic Scan</h3></div>
+    </div>
+  </section>
 
-    <div class="service" onclick="book('Oil Change')"><h3>Oil Change</h3></div>
-    <div class="service" onclick="book('Engine Repair')"><h3>Engine Repair</h3></div>
-    <div class="service" onclick="book('Brake Service')"><h3>Brake Service</h3></div>
-    <div class="service" onclick="book('Tire Replacement')"><h3>Tire Replacement</h3></div>
-    <div class="service" onclick="book('Battery Check')"><h3>Battery Check</h3></div>
-    <div class="service" onclick="book('Full Maintenance')"><h3>Full Maintenance</h3></div>
-    <div class="service" onclick="book('Chain Adjustment')"><h3>Chain Adjustment</h3></div>
-    <div class="service" onclick="book('Carburetor Cleaning')"><h3>Carburetor Cleaning</h3></div>
-    <div class="service" onclick="book('Spark Plug Replace')"><h3>Spark Plug Replace</h3></div>
-    <div class="service" onclick="book('Air Filter Service')"><h3>Air Filter Service</h3></div>
-    <div class="service" onclick="book('Radiator Flush')"><h3>Radiator Flush</h3></div>
-    <div class="service" onclick="book('Electrical Check')"><h3>Electrical Check</h3></div>
-    <div class="service" onclick="book('Clutch Repair')"><h3>Clutch Repair</h3></div>
-    <div class="service" onclick="book('Gear Adjustment')"><h3>Gear Adjustment</h3></div>
-    <div class="service" onclick="book('Wheel Alignment')"><h3>Wheel Alignment</h3></div>
-    <div class="service" onclick="book('Headlight Repair')"><h3>Headlight Repair</h3></div>
-    <div class="service" onclick="book('Exhaust Repair')"><h3>Exhaust Repair</h3></div>
-    <div class="service" onclick="book('Suspension Fix')"><h3>Suspension Fix</h3></div>
-    <div class="service" onclick="book('Tune Up')"><h3>Tune Up</h3></div>
-    <div class="service" onclick="book('Diagnostic Scan')"><h3>Diagnostic Scan</h3></div>
-
-</div>
-</section>
+  <!-- Live Cart Section (consistent across all pages) -->
+  <section class="card">
+    <h2>🛵 Your Cart</h2>
+    <div id="cartBox" class="cart-box"></div>
+    <button class="checkout-btn" onclick="checkout()">🛒 CHECKOUT NOW</button>
+  </section>
+</main>
 
 <!-- BOOKING MODAL -->
-<div id="modal" class="modal">
-    <div class="modal-content modern-booking">
-
-        <h2>🛠 Book Your Service</h2>
-        <p class="booking-sub">Please fill up all required information</p>
-
-        <label>Name</label>
-        <input type="text" id="name" placeholder="Enter your full name">
-
-        <label>Date</label>
-        <input type="date" id="date">
-
-        <label>Location</label>
-        <input type="text" id="location" placeholder="Your address">
-
-        <button onclick="confirm()">🚀 Confirm Booking</button>
-        <button onclick="closeModal()" class="close-btn">Cancel</button>
-
-    </div>
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <h2>🛠 Book Your Service</h2>
+    <p class="booking-sub">Please fill up all required information</p>
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+    <label>Preferred Date</label>
+    <input type="date" id="date">
+    <label>Location / Address</label>
+    <input type="text" id="location" placeholder="Your address or shop location">
+    <button onclick="confirmBooking()">🚀 Confirm Booking</button>
+    <button onclick="closeBookingModal()" class="close-btn">Cancel</button>
+  </div>
 </div>
 
-<!-- RECEIPT POPUP -->
+<!-- RECEIPT POPUP (Booking confirmation) -->
 <div id="popup" class="modal">
-    <div class="modal-content">
+  <div class="modal-content">
+    <h2>✅ Booking Confirmed</h2>
+    <p id="receipt"></p>
+    <button onclick="closePopup()">OK</button>
+  </div>
+</div>
 
-        <h2>✅ Booking Confirmed</h2>
-        <p id="receipt"></p>
-
-        <button onclick="closePopup()">OK</button>
-
-    </div>
+<!-- CART RECEIPT MODAL (for checkout) -->
+<div id="cartReceiptModal" class="modal">
+  <div class="modal-content">
+    <h2>🧾 Official Receipt</h2>
+    <p id="cartReceiptText"></p>
+    <button onclick="closeCartReceipt()">Close</button>
+  </div>
 </div>
 
 <script>
+  // ==================== CART LOGIC (shared with parts page) ====================
+  let cart = [];
 
-let selectedService = "";
+  function add(name, price) {
+    cart.push({ name, price });
+    updateCartUI();
+    showToast(`✓ ${name} added to cart`);
+  }
 
-/* OPEN BOOKING */
-function book(service){
+  function removeItem(index) {
+    let removed = cart[index];
+    cart.splice(index, 1);
+    updateCartUI();
+    showToast(`✗ ${removed.name} removed`);
+  }
+
+  function updateCartUI() {
+    let box = document.getElementById("cartBox");
+    if (!box) return;
+    box.innerHTML = "";
+    let total = 0;
+    if (cart.length === 0) {
+      box.innerHTML = `<div style="text-align:center; padding:2rem; color:#6c7a75;">🛍️ Your cart is empty — add parts from Moto Parts page!</div>`;
+    } else {
+      cart.forEach((item, i) => {
+        total += item.price;
+        box.innerHTML += `<div class="cart-item"><span>${escapeHtml(item.name)} - ₱${item.price.toLocaleString()}</span><button onclick="removeItem(${i})">✖</button></div>`;
+      });
+    }
+    document.getElementById("count").innerText = cart.length;
+    document.getElementById("total").innerText = total.toLocaleString();
+  }
+
+  function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+  function checkout() {
+    if (cart.length === 0) { alert("Your cart is empty! Add parts before checkout."); return; }
+    let receiptLines = "", totalSum = 0;
+    cart.forEach(item => {
+      totalSum += item.price;
+      receiptLines += `${item.name} ................ ₱${item.price.toLocaleString()}\n`;
+    });
+    receiptLines += `\n───────────────────\n💰 TOTAL: ₱${totalSum.toLocaleString()}\n📅 ${new Date().toLocaleString()}\n🏍️ Karl Garage thanks you!`;
+    document.getElementById("cartReceiptText").innerText = receiptLines;
+    document.getElementById("cartReceiptModal").style.display = "flex";
+    cart = [];
+    updateCartUI();
+    showToast("✅ Checkout complete!");
+  }
+
+  function closeCartReceipt() { document.getElementById("cartReceiptModal").style.display = "none"; }
+
+  // ==================== SERVICE BOOKING LOGIC ====================
+  let selectedService = "";
+
+  function book(service) {
     selectedService = service;
-    document.getElementById("modal").style.display = "flex";
-}
+    document.getElementById("bookingModal").style.display = "flex";
+  }
 
-/* CLOSE MODAL */
-function closeModal(){
-    document.getElementById("modal").style.display = "none";
-}
+  function closeBookingModal() {
+    document.getElementById("bookingModal").style.display = "none";
+  }
 
-/* CONFIRM BOOKING */
-function confirm(){
-
-    let name = document.getElementById("name").value;
+  function confirmBooking() {
+    let name = document.getElementById("name").value.trim();
     let date = document.getElementById("date").value;
-    let location = document.getElementById("location").value;
+    let location = document.getElementById("location").value.trim();
 
-    if(!name || !date || !location){
-        alert("Please fill all fields!");
-        return;
+    if (!name || !date || !location) {
+      alert("Please fill all fields (Name, Date, Location)");
+      return;
     }
 
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("bookingModal").style.display = "none";
 
-    document.getElementById("receipt").innerText =
-        "Service: " + selectedService +
-        "\nName: " + name +
-        "\nDate: " + date +
-        "\nLocation: " + location;
-
+    let receiptMsg = `📌 SERVICE: ${selectedService}\n👤 Name: ${name}\n📅 Date: ${date}\n📍 Location: ${location}\n✅ Status: Confirmed — we'll contact you soon.`;
+    document.getElementById("receipt").innerText = receiptMsg;
     document.getElementById("popup").style.display = "flex";
 
     document.getElementById("name").value = "";
     document.getElementById("date").value = "";
     document.getElementById("location").value = "";
-}
 
-/* CLOSE RECEIPT */
-function closePopup(){
+    showToast(`📅 ${selectedService} booked for ${name}`);
+  }
+
+  function closePopup() {
     document.getElementById("popup").style.display = "none";
-}
+  }
 
+  // ==================== FOOTER UTILITIES (fully working) ====================
+  function showToast(msg) {
+    let toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2600);
+  }
+
+  function socialClick(platform) { showToast(`📱 Follow us on ${platform} for moto updates!`); }
+  function navLink(page) { showToast(`🔍 Navigating to ${page} page (demo)`); }
+  function copyText(text, label) { navigator.clipboard.writeText(text); showToast(`📋 ${label} copied: ${text}`); }
+  function showHoursDetail() { showToast("🕒 Operating Hours: Monday to Saturday, 9AM – 7PM. Closed Sunday."); }
+  function subscribeNews() {
+    let email = document.getElementById("newsEmail").value.trim();
+    if (!email || !email.includes('@')) { alert("Please enter a valid email address."); return; }
+    showToast(`📧 Subscribed! ${email} will receive exclusive offers.`);
+    document.getElementById("newsEmail").value = "";
+    localStorage.setItem('kg_newsletter', email);
+  }
+
+  // Initial cart render
+  window.onload = () => {
+    updateCartUI();
+  };
 </script>
+
+<!-- FULLY FUNCTIONAL FOOTER -->
+<footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h3>🏍️ Karl Garage</h3>
+      <p>Expert motorcycle services & premium parts. Ride safe, ride with confidence.</p>
+      <div class="social-icons">
+        <a onclick="socialClick('Facebook')">📘</a>
+        <a onclick="socialClick('Instagram')">📷</a>
+        <a onclick="socialClick('Twitter')">🐦</a>
+        <a onclick="socialClick('YouTube')">▶️</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a onclick="navLink('Home')">Home</a></li>
+        <li><a onclick="navLink('About')">About Us</a></li>
+        <li><a onclick="navLink('Moto Parts')">Moto Parts</a></li>
+        <li><a onclick="navLink('Services')">Services</a></li>
+        <li><a onclick="navLink('Contact')">Contact</a></li>
+        <li><a onclick="navLink('Privacy')">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact Info</h4>
+      <p onclick="copyText('+63 912 345 6789', 'Phone')">📞 +63 912 345 6789</p>
+      <p onclick="copyText('hello@karlgarage.com', 'Email')">✉️ hello@karlgarage.com</p>
+      <p onclick="showHoursDetail()">🕒 Mon - Sat: 9AM - 7PM</p>
+      <p>📍 123 Moto Avenue, Irisan, Baguio City</p>
+    </div>
+    <div class="footer-newsletter">
+      <h4>Gear Up 🛵</h4>
+      <p>Get exclusive offers & moto tips.</p>
+      <div class="newsletter-form">
+        <input type="email" id="newsEmail" placeholder="Your email address">
+        <button onclick="subscribeNews()">Subscribe →</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Karl Garage – Premium Moto Parts & Service | Built for riders. <a onclick="navLink('Privacy')">Privacy</a> | <a onclick="navLink('Terms')">Terms</a></p>
+  </div>
+</footer>
 
 </body>
 </html>

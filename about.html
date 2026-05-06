@@ -2,48 +2,775 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>About - Karl Moto Parts</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Karl Garage | Premium Moto Parts & Service</title>
+<style>
+  /* ===== RESET & BASE (light red, black, white theme) ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+    background: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER & CENTERED NAVIGATION ===== */
+  header {
+    background: #000000;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0.8rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .logo {
+    height: 52px;
+    width: auto;
+    background: #ff4444;
+    border-radius: 40px;
+    padding: 5px 12px;
+    object-fit: contain;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #1a1a1a;
+    padding: 0.5rem 1.8rem;
+    border-radius: 60px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    padding: 0.3rem 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: #ff6666;
+    border-bottom-color: #ff4444;
+    transform: translateY(-1px);
+  }
+
+  nav a.active {
+    color: #ff4444;
+    border-bottom-color: #ff4444;
+    font-weight: 700;
+  }
+
+  .cart {
+    background: #1a1a1a;
+    padding: 0.4rem 1rem;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-left: 0.5rem;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .cart span {
+    background: #ff4444;
+    color: #ffffff;
+    padding: 0 6px;
+    border-radius: 30px;
+    font-weight: 800;
+  }
+
+  .nav-balance {
+    width: 120px;
+    visibility: hidden;
+  }
+
+  @media (max-width: 850px) {
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .cart {
+      margin-left: 0;
+    }
+    .nav-balance {
+      display: none;
+    }
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    flex: 1;
+  }
+
+  /* Hero section about */
+  .about-hero {
+    background: linear-gradient(135deg, #2a0000 0%, #000000 100%);
+    color: white;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.25);
+  }
+
+  .about-hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+  }
+
+  .about-hero h1 span {
+    color: #ff4444;
+  }
+
+  .about-hero p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+  }
+
+  /* Card style for about boxes */
+  .card {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 2rem;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+  }
+
+  .about-grid {
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .about-box {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  }
+
+  .about-box:hover {
+    transform: translateY(-8px);
+    border-color: #ff4444;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+  }
+
+  .about-box h3 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .about-box p {
+    color: #4a4a4a;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Story section */
+  .story-section {
+    max-width: 1200px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .story-text {
+    flex: 1.5;
+  }
+
+  .story-text h2 {
+    font-size: 1.8rem;
+    border-left: 6px solid #ff4444;
+    padding-left: 1rem;
+    margin-bottom: 1.2rem;
+    color: #1a1a1a;
+  }
+
+  .story-text p {
+    margin-bottom: 1rem;
+    color: #4a4a4a;
+    line-height: 1.6;
+  }
+
+  .story-image {
+    flex: 1;
+    text-align: center;
+  }
+
+  .story-image img {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 1.5rem;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+  }
+
+  .story-image img:hover {
+    transform: scale(1.02);
+  }
+
+  /* Stats counter */
+  .stats-grid {
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 4px solid #ff4444;
+    transition: 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .stat-label {
+    color: #666666;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+
+  /* Cart display */
+  .cart-box {
+    background: #faf9f5;
+    border-radius: 1.2rem;
+    padding: 0.5rem 0;
+    min-height: 90px;
+    max-height: 260px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    margin: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 60px;
+    border-left: 4px solid #ff4444;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    font-weight: 500;
+  }
+
+  .cart-item button {
+    background: #e23b3b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .cart-item button:hover {
+    background: #ac2c2c;
+  }
+
+  .checkout-btn {
+    background: #ff4444;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+
+  .checkout-btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+  }
+
+  /* Footer (fully functional) */
+  .modern-footer {
+    background: #000000;
+    color: #e2e8f0;
+    margin-top: 3rem;
+    padding: 2.5rem 2rem 1.5rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  .footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.6rem;
+    color: #ff4444;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-brand p {
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .social-icons a {
+    background: #1a1a1a;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #ff4444;
+    font-size: 1.2rem;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .social-icons a:hover {
+    background: #ff4444;
+    color: #000000;
+    transform: translateY(-3px);
+  }
+
+  .footer-links h4, .footer-contact h4, .footer-newsletter h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ff6666;
+  }
+
+  .footer-links ul {
+    list-style: none;
+  }
+
+  .footer-links li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-links a:hover {
+    color: #ff4444;
+    padding-left: 5px;
+  }
+
+  .footer-contact p {
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .footer-contact p:hover {
+    color: #ff4444;
+    transform: translateX(3px);
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .newsletter-form input {
+    padding: 0.8rem 1rem;
+    border-radius: 60px;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder {
+    color: #888888;
+  }
+
+  .newsletter-form button {
+    background: #ff4444;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .newsletter-form button:hover {
+    background: #cc0000;
+    transform: scale(0.98);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1a1a1a;
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom a {
+    color: #ff4444;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .footer-bottom a:hover {
+    text-decoration: underline;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-content {
+    background: white;
+    max-width: 450px;
+    width: 85%;
+    padding: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    animation: fadeSlide 0.25s ease;
+  }
+
+  .modal-content h2 {
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+  }
+
+  .modal-content p {
+    background: #f0f3f8;
+    padding: 1rem;
+    border-radius: 1.2rem;
+    white-space: pre-line;
+    font-family: monospace;
+    margin: 1rem 0;
+  }
+
+  .modal-content button {
+    background: #ff4444;
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 60px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .modal-content button:hover {
+    background: #cc0000;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-30px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  .toast-msg {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: #ff4444;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 1100;
+    animation: fadeOut 2.5s forwards;
+  }
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+</style>
 </head>
 <body>
 
 <header>
-<div class="header-container">
-    <img src="logo.webp" class="logo">
-
+  <div class="header-container">
+    <img src="logo.webp" class="logo" alt="Karl Garage Logo">
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html" class="active">About</a>
-        <a href="moto-parts.html">Moto Parts</a>
-        <a href="services.html">Services</a>
-        <a href="contact.html">Contact</a>
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="moto-parts.html">Moto Parts</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
     </nav>
-</div>
+    <div class="cart">
+      🛒 <span id="count">0</span> items | ₱<span id="total">0</span>
+    </div>
+    <div class="nav-balance"></div>
+  </div>
 </header>
 
-<section class="card about-hero">
-    <h1>🏍 About Karl Moto Part</h1>
-    <p>Your trusted motorcycle shop in Irisan, Baguio City.</p>
-</section>
+<main>
+  <section class="about-hero">
+    <h1>🏍 About <span>Karl Moto Part</span></h1>
+    <p>Your trusted motorcycle shop in Irisan, Baguio City — Quality parts & expert service since 2015.</p>
+  </section>
 
-<section class="about-grid">
-
+  <div class="about-grid">
     <div class="about-box">
-        <h3>🔥 Our Mission</h3>
-        <p>To provide high-quality motorcycle parts and fast reliable service for riders.</p>
+      <h3>🔥 Our Mission</h3>
+      <p>To provide high-quality motorcycle parts and fast reliable service for riders across the Philippines.</p>
     </div>
-
     <div class="about-box">
-        <h3>⚙ What We Do</h3>
-        <p>We sell parts, repair motorcycles, and offer full maintenance services.</p>
+      <h3>⚙ What We Do</h3>
+      <p>We sell premium parts, repair motorcycles, and offer full maintenance services for all bike models.</p>
     </div>
-
     <div class="about-box">
-        <h3>🏁 Why Choose Us</h3>
-        <p>Affordable prices, trusted mechanics, and fast service guaranteed.</p>
+      <h3>🏁 Why Choose Us</h3>
+      <p>Affordable prices, trusted mechanics, fast service guarantee, and a passion for two wheels.</p>
     </div>
+  </div>
 
-</section>
+  <div class="story-section">
+    <div class="story-text">
+      <h2>📖 Our Story</h2>
+      <p>Karl Garage started as a small workshop in Irisan, Baguio City with a mission to help fellow riders get genuine parts and honest repairs. Over the years, we've grown into a full-service motorcycle hub, but our core values remain: transparency, quality, and community.</p>
+      <p>Today, we serve hundreds of satisfied customers, from daily commuters to track day enthusiasts. Every part we sell is tested, every repair is backed by our warranty, and every rider leaves with a smile.</p>
+    </div>
+    <div class="story-image">
+      <img src="moto.webp" alt="Karl Garage Workshop">
+    </div>
+  </div>
 
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-card"><div class="stat-number">2.5k+</div><div class="stat-label">Happy Riders</div></div>
+    <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Genuine Parts</div></div>
+    <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Support Hotline</div></div>
+  </div>
+
+  <!-- Live Cart Section (same design) -->
+  <div class="card" style="margin-top: 1rem;">
+    <h2>🛵 Your Cart</h2>
+    <div id="cartBox" class="cart-box"></div>
+    <button class="checkout-btn" onclick="checkout()">🛒 CHECKOUT NOW</button>
+  </div>
+</main>
+
+<!-- FULLY FUNCTIONAL FOOTER -->
+<footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h3>🏍️ Karl Garage</h3>
+      <p>Premium motorcycle parts, expert repair, and genuine care for every rider.</p>
+      <div class="social-icons">
+        <a onclick="socialClick('Facebook')">📘</a>
+        <a onclick="socialClick('Instagram')">📷</a>
+        <a onclick="socialClick('Twitter')">🐦</a>
+        <a onclick="socialClick('YouTube')">▶️</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a onclick="navLink('Home')">Home</a></li>
+        <li><a onclick="navLink('About')">About Us</a></li>
+        <li><a onclick="navLink('Moto Parts')">Moto Parts</a></li>
+        <li><a onclick="navLink('Services')">Services</a></li>
+        <li><a onclick="navLink('Contact')">Contact</a></li>
+        <li><a onclick="navLink('Privacy')">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact Info</h4>
+      <p onclick="copyText('+63 912 345 6789', 'Phone')">📞 +63 912 345 6789</p>
+      <p onclick="copyText('hello@karlgarage.com', 'Email')">✉️ hello@karlgarage.com</p>
+      <p onclick="showHoursDetail()">🕒 Mon - Sat: 9AM - 7PM</p>
+      <p>📍 123 Moto Avenue, Irisan, Baguio City</p>
+    </div>
+    <div class="footer-newsletter">
+      <h4>Gear Up 🛵</h4>
+      <p>Get exclusive offers & moto tips.</p>
+      <div class="newsletter-form">
+        <input type="email" id="newsEmail" placeholder="Your email address">
+        <button onclick="subscribeNews()">Subscribe →</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Karl Garage – Premium Moto Parts & Service | Built for riders. <a onclick="navLink('Privacy')">Privacy</a> | <a onclick="navLink('Terms')">Terms</a></p>
+  </div>
+</footer>
+
+<div id="popup" class="modal">
+  <div class="modal-content">
+    <h2>🧾 Receipt</h2>
+    <p id="receipt"></p>
+    <button onclick="closePopup()">OK</button>
+  </div>
+</div>
+
+<script>
+// =============== CART LOGIC ===============
+let cart = [];
+
+function add(name, price) {
+  cart.push({ name, price });
+  updateCartUI();
+  showToast(`✓ ${name} added`);
+}
+
+function removeItem(index) {
+  let removed = cart[index];
+  cart.splice(index, 1);
+  updateCartUI();
+  showToast(`✗ ${removed.name} removed`);
+}
+
+function updateCartUI() {
+  let box = document.getElementById("cartBox");
+  if (!box) return;
+  box.innerHTML = "";
+  let total = 0;
+  if (cart.length === 0) {
+    box.innerHTML = `<div style="text-align:center; padding:2rem; color:#6c7a75;">🛍️ Your cart is empty — add parts from Moto Parts page!</div>`;
+  } else {
+    cart.forEach((item, i) => {
+      total += item.price;
+      box.innerHTML += `<div class="cart-item"><span>${escapeHtml(item.name)} - ₱${item.price.toLocaleString()}</span><button onclick="removeItem(${i})">✖</button></div>`;
+    });
+  }
+  document.getElementById("count").innerText = cart.length;
+  document.getElementById("total").innerText = total.toLocaleString();
+}
+
+function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+function checkout() {
+  if (cart.length === 0) { alert("Cart is empty! Add some parts first."); return; }
+  let receiptText = "", total = 0;
+  cart.forEach(i => { total += i.price; receiptText += `${i.name} ................ ₱${i.price.toLocaleString()}\n`; });
+  receiptText += `\n────────────────\n💰 TOTAL: ₱${total.toLocaleString()}\n📅 ${new Date().toLocaleString()}\n🏍️ Karl Garage thanks you!`;
+  document.getElementById("receipt").innerText = receiptText;
+  document.getElementById("popup").style.display = "flex";
+  cart = [];
+  updateCartUI();
+  showToast("✅ Checkout complete!");
+}
+function closePopup() { document.getElementById("popup").style.display = "none"; }
+
+// =============== FOOTER & UTILITIES ===============
+function showToast(msg) {
+  let toast = document.createElement('div');
+  toast.className = 'toast-msg';
+  toast.innerText = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2600);
+}
+function socialClick(platform) { showToast(`📱 Follow us on ${platform} for updates!`); }
+function navLink(page) { showToast(`🔍 Navigating to ${page} page (coming soon)`); }
+function copyText(text, label) {
+  navigator.clipboard.writeText(text);
+  showToast(`📋 ${label} copied: ${text}`);
+}
+function showHoursDetail() { showToast("🕒 Operating Hours: Monday to Saturday, 9:00 AM – 7:00 PM. Closed Sunday."); }
+function subscribeNews() {
+  let email = document.getElementById("newsEmail").value.trim();
+  if (!email || !email.includes('@')) { alert("Please enter a valid email address."); return; }
+  showToast(`📧 Subscribed! ${email} will receive exclusive moto deals.`);
+  document.getElementById("newsEmail").value = "";
+  localStorage.setItem('kg_newsletter', email);
+}
+
+window.onload = () => {
+  updateCartUI();
+};
+</script>
 </body>
 </html>
