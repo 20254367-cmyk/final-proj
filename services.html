@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Services - Karl Garage</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<div class="header-container">
+    <img src="logo.webp" class="logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="moto-parts.html">Moto Parts</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</div>
+</header>
+
+<section class="card">
+<h2>Our Services</h2>
+<p>Click any service to book an appointment</p>
+
+<div class="services">
+
+    <div class="service" onclick="book('Oil Change')"><h3>Oil Change</h3></div>
+    <div class="service" onclick="book('Engine Repair')"><h3>Engine Repair</h3></div>
+    <div class="service" onclick="book('Brake Service')"><h3>Brake Service</h3></div>
+    <div class="service" onclick="book('Tire Replacement')"><h3>Tire Replacement</h3></div>
+    <div class="service" onclick="book('Battery Check')"><h3>Battery Check</h3></div>
+    <div class="service" onclick="book('Full Maintenance')"><h3>Full Maintenance</h3></div>
+    <div class="service" onclick="book('Chain Adjustment')"><h3>Chain Adjustment</h3></div>
+    <div class="service" onclick="book('Carburetor Cleaning')"><h3>Carburetor Cleaning</h3></div>
+    <div class="service" onclick="book('Spark Plug Replace')"><h3>Spark Plug Replace</h3></div>
+    <div class="service" onclick="book('Air Filter Service')"><h3>Air Filter Service</h3></div>
+    <div class="service" onclick="book('Radiator Flush')"><h3>Radiator Flush</h3></div>
+    <div class="service" onclick="book('Electrical Check')"><h3>Electrical Check</h3></div>
+    <div class="service" onclick="book('Clutch Repair')"><h3>Clutch Repair</h3></div>
+    <div class="service" onclick="book('Gear Adjustment')"><h3>Gear Adjustment</h3></div>
+    <div class="service" onclick="book('Wheel Alignment')"><h3>Wheel Alignment</h3></div>
+    <div class="service" onclick="book('Headlight Repair')"><h3>Headlight Repair</h3></div>
+    <div class="service" onclick="book('Exhaust Repair')"><h3>Exhaust Repair</h3></div>
+    <div class="service" onclick="book('Suspension Fix')"><h3>Suspension Fix</h3></div>
+    <div class="service" onclick="book('Tune Up')"><h3>Tune Up</h3></div>
+    <div class="service" onclick="book('Diagnostic Scan')"><h3>Diagnostic Scan</h3></div>
+
+</div>
+</section>
+
+<!-- BOOKING MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-content modern-booking">
+
+        <h2>🛠 Book Your Service</h2>
+        <p class="booking-sub">Please fill up all required information</p>
+
+        <label>Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+
+        <label>Date</label>
+        <input type="date" id="date">
+
+        <label>Location</label>
+        <input type="text" id="location" placeholder="Your address">
+
+        <button onclick="confirm()">🚀 Confirm Booking</button>
+        <button onclick="closeModal()" class="close-btn">Cancel</button>
+
+    </div>
+</div>
+
+<!-- RECEIPT POPUP -->
+<div id="popup" class="modal">
+    <div class="modal-content">
+
+        <h2>✅ Booking Confirmed</h2>
+        <p id="receipt"></p>
+
+        <button onclick="closePopup()">OK</button>
+
+    </div>
+</div>
+
+<script>
+
+let selectedService = "";
+
+/* OPEN BOOKING */
+function book(service){
+    selectedService = service;
+    document.getElementById("modal").style.display = "flex";
+}
+
+/* CLOSE MODAL */
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+/* CONFIRM BOOKING */
+function confirm(){
+
+    let name = document.getElementById("name").value;
+    let date = document.getElementById("date").value;
+    let location = document.getElementById("location").value;
+
+    if(!name || !date || !location){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    document.getElementById("modal").style.display = "none";
+
+    document.getElementById("receipt").innerText =
+        "Service: " + selectedService +
+        "\nName: " + name +
+        "\nDate: " + date +
+        "\nLocation: " + location;
+
+    document.getElementById("popup").style.display = "flex";
+
+    document.getElementById("name").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("location").value = "";
+}
+
+/* CLOSE RECEIPT */
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

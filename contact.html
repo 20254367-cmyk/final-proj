@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact - Karl Garage</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+<div class="header-container">
+    <img src="logo.webp" class="logo">
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="moto-parts.html">Moto Parts</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html" class="active">Contact</a>
+    </nav>
+</div>
+</header>
+
+<section class="card">
+<h2>📞 Contact Us</h2>
+
+<div class="contact-grid">
+
+    <div class="contact-box">
+        <h3>📱 Phone</h3>
+        <p>+63 924 564 889</p>
+    </div>
+
+    <div class="contact-box">
+        <h3>⏰ Open Hours</h3>
+        <p>Mon - Sat | 8AM - 6PM</p>
+    </div>
+
+    <div class="contact-box">
+        <h3>💬 Support</h3>
+        <p>We reply fast to your concerns</p>
+    </div>
+
+</div>
+
+<h3 style="margin-top:20px;">Send Message</h3>
+
+<input type="text" id="name" placeholder="Your Name">
+<input type="text" id="message" placeholder="Your Message">
+<button onclick="send()">Send Message</button>
+
+</section>
+
+<section class="card">
+    <h2>📍 Visit Us</h2>
+
+    <div class="map">
+        <iframe 
+            src="https://maps.google.com/maps?q=Irisan%20Baguio%20City&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            loading="lazy">
+        </iframe>
+    </div>
+</section>
+
+<div id="popup" class="modal">
+    <div class="modal-content">
+        <h2>✅ Thank You!</h2>
+        <p>Your message has been sent.</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<script>
+function send(){
+    let name = document.getElementById("name").value;
+    let msg = document.getElementById("message").value;
+
+    if(!name || !msg){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    document.getElementById("popup").style.display = "flex";
+
+    document.getElementById("name").value = "";
+    document.getElementById("message").value = "";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+</script>
+
+</body>
+</html>
